@@ -13,17 +13,17 @@
 #include <stdbool.h>
 
 
-// IP address of the IO-Link Master for TCP communication
-#define TCP_IP "127.0.0.1"
+// // IP address of the IO-Link Master for TCP communication
+// #define TCP_IP "127.0.0.1"
 
 // Buffer size for receiving data
 #define BUFFER_SIZE 1024
 
-// TCP port number for communication with ports 0 and 1 of the IO-Link device
-#define TCP_PORT1 12010
+// // TCP port number for communication with ports 0 and 1 of the IO-Link device
+// #define TCP_PORT1 12010
 
-// TCP port number for communication with ports 2 and 3 of the IO-Link device
-#define TCP_PORT2 12011
+// // TCP port number for communication with ports 2 and 3 of the IO-Link device
+// #define TCP_PORT2 12011
 
 // Verbose flag for enabling/disabling detailed logging (set to 1 to enable, 0 to disable)
 #define VERBOSE
@@ -71,10 +71,10 @@ int power(uint8_t _port, uint8_t _status) {
     return CMD_FAIL;
   }
 
-  int tcp_port = (_port < 2) ? TCP_PORT1 : TCP_PORT2;
-  if (_port >= 2) {
-    _port -= 2;
-  }
+  // int tcp_port = (_port < 2) ? TCP_PORT1 : TCP_PORT2;
+  // if (_port >= 2) {
+  //   _port -= 2;
+  // }
 
   // Command PWR = 1
   unsigned char message[3] = {
@@ -90,18 +90,18 @@ int power(uint8_t _port, uint8_t _status) {
 
   struct sockaddr_in server_addr;
   server_addr.sin_family = AF_INET;
-  server_addr.sin_port = htons(tcp_port);
-  if (inet_pton(AF_INET, TCP_IP, & server_addr.sin_addr) <= 0) {
-    perror("Invalid address");
-    close(sock);
-    return CMD_FAIL;
-  }
+  // server_addr.sin_port = htons(tcp_port);
+  // if (inet_pton(AF_INET, TCP_IP, & server_addr.sin_addr) <= 0) {
+  //   perror("Invalid address");
+  //   close(sock);
+  //   return CMD_FAIL;
+  // }
 
-  if (connect(sock, (struct sockaddr * ) & server_addr, sizeof(server_addr)) < 0) {
-    perror("Connection failed");
-    close(sock);
-    return CMD_FAIL;
-  }
+  // if (connect(sock, (struct sockaddr * ) & server_addr, sizeof(server_addr)) < 0) {
+  //   perror("Connection failed");
+  //   close(sock);
+  //   return CMD_FAIL;
+  // }
 
   if (send(sock, message, sizeof(message), 0) < 0) {
     perror("Send error");
@@ -137,10 +137,10 @@ int pd(uint8_t _port, uint8_t _len_out, uint8_t _len_in, uint8_t * _pd_out, uint
     return CMD_FAIL;
   }
 
-  int tcp_port = (_port < 2) ? TCP_PORT1 : TCP_PORT2;
-  if (_port >= 2) {
-    _port -= 2;
-  }
+  // int tcp_port = (_port < 2) ? TCP_PORT1 : TCP_PORT2;
+  // if (_port >= 2) {
+  //   _port -= 2;
+  // }
 
   // Command PD = 3
   uint8_t message[BUFFER_SIZE];
@@ -164,20 +164,20 @@ int pd(uint8_t _port, uint8_t _len_out, uint8_t _len_in, uint8_t * _pd_out, uint
     return CMD_FAIL;
   }
 
-  struct sockaddr_in server_addr;
-  server_addr.sin_family = AF_INET;
-  server_addr.sin_port = htons(tcp_port);
-  if (inet_pton(AF_INET, TCP_IP, & server_addr.sin_addr) <= 0) {
-    perror("Invalid address");
-    close(sock);
-    return CMD_FAIL;
-  }
+  // struct sockaddr_in server_addr;
+  // server_addr.sin_family = AF_INET;
+  // server_addr.sin_port = htons(tcp_port);
+  // if (inet_pton(AF_INET, TCP_IP, & server_addr.sin_addr) <= 0) {
+  //   perror("Invalid address");
+  //   close(sock);
+  //   return CMD_FAIL;
+  // }
 
-  if (connect(sock, (struct sockaddr * ) & server_addr, sizeof(server_addr)) < 0) {
-    perror("Connection failed");
-    close(sock);
-    return CMD_FAIL;
-  }
+  // if (connect(sock, (struct sockaddr * ) & server_addr, sizeof(server_addr)) < 0) {
+  //   perror("Connection failed");
+  //   close(sock);
+  //   return CMD_FAIL;
+  // }
 
   if (send(sock, message, 4 + _len_out, 0) < 0) {
     perror("Send error");
@@ -216,10 +216,10 @@ int readParameter(uint8_t _port, uint16_t _index, uint8_t _subindex, uint8_t _le
     return CMD_FAIL;
   }
 
-  uint16_t tcp_port = (_port < 2) ? TCP_PORT1 : TCP_PORT2;
-  if (_port >= 2) {
-    _port -= 2;
-  }
+  // uint16_t tcp_port = (_port < 2) ? TCP_PORT1 : TCP_PORT2;
+  // if (_port >= 2) {
+  //   _port -= 2;
+  // }
 
   // Command READ = 4
   uint8_t message[6];
@@ -244,20 +244,20 @@ int readParameter(uint8_t _port, uint16_t _index, uint8_t _subindex, uint8_t _le
     return CMD_FAIL;
   }
 
-  struct sockaddr_in server_addr;
-  server_addr.sin_family = AF_INET;
-  server_addr.sin_port = htons(tcp_port);
-  if (inet_pton(AF_INET, TCP_IP, & server_addr.sin_addr) <= 0) {
-    perror("Invalid address");
-    close(sock);
-    return CMD_FAIL;
-  }
+  // struct sockaddr_in server_addr;
+  // server_addr.sin_family = AF_INET;
+  // server_addr.sin_port = htons(tcp_port);
+  // if (inet_pton(AF_INET, TCP_IP, & server_addr.sin_addr) <= 0) {
+  //   perror("Invalid address");
+  //   close(sock);
+  //   return CMD_FAIL;
+  // }
 
-  if (connect(sock, (struct sockaddr * ) & server_addr, sizeof(server_addr)) < 0) {
-    perror("Connection failed");
-    close(sock);
-    return CMD_FAIL;
-  }
+  // if (connect(sock, (struct sockaddr * ) & server_addr, sizeof(server_addr)) < 0) {
+  //   perror("Connection failed");
+  //   close(sock);
+  //   return CMD_FAIL;
+  // }
 
   if (send(sock, message, sizeof(message), 0) < 0) {
     perror("Send error");
@@ -297,10 +297,10 @@ int writeParameter(uint8_t _port, uint16_t _index, uint8_t _subindex, uint8_t _l
     return CMD_FAIL;
   }
 
-  uint16_t tcp_port = (_port < 2) ? TCP_PORT1 : TCP_PORT2;
-  if (_port >= 2) {
-    _port -= 2;
-  }
+  // uint16_t tcp_port = (_port < 2) ? TCP_PORT1 : TCP_PORT2;
+  // if (_port >= 2) {
+  //   _port -= 2;
+  // }
 
   // Command WRITE = 5
   uint8_t message[BUFFER_SIZE];
@@ -325,20 +325,20 @@ int writeParameter(uint8_t _port, uint16_t _index, uint8_t _subindex, uint8_t _l
     return CMD_FAIL;
   }
 
-  struct sockaddr_in server_addr;
-  server_addr.sin_family = AF_INET;
-  server_addr.sin_port = htons(tcp_port);
-  if (inet_pton(AF_INET, TCP_IP, & server_addr.sin_addr) <= 0) {
-    perror("Invalid address");
-    close(sock);
-    return CMD_FAIL;
-  }
+  // struct sockaddr_in server_addr;
+  // server_addr.sin_family = AF_INET;
+  // server_addr.sin_port = htons(tcp_port);
+  // if (inet_pton(AF_INET, TCP_IP, & server_addr.sin_addr) <= 0) {
+  //   perror("Invalid address");
+  //   close(sock);
+  //   return CMD_FAIL;
+  // }
 
-  if (connect(sock, (struct sockaddr * ) & server_addr, sizeof(server_addr)) < 0) {
-    perror("Connection failed");
-    close(sock);
-    return CMD_FAIL;
-  }
+  // if (connect(sock, (struct sockaddr * ) & server_addr, sizeof(server_addr)) < 0) {
+  //   perror("Connection failed");
+  //   close(sock);
+  //   return CMD_FAIL;
+  // }
 
   if (send(sock, message, (6 + _length), 0) < 0) {
     perror("Send error");
@@ -392,10 +392,10 @@ int led(uint8_t _port, uint8_t _status) {
     return CMD_FAIL;
   }
 
-  int tcp_port = (_port < 2) ? TCP_PORT1 : TCP_PORT2;
-  if (_port >= 2) {
-    _port -= 2;
-  }
+  // int tcp_port = (_port < 2) ? TCP_PORT1 : TCP_PORT2;
+  // if (_port >= 2) {
+  //   _port -= 2;
+  // }
 
   // Command LED = 2
   unsigned char message[3] = {
@@ -409,20 +409,20 @@ int led(uint8_t _port, uint8_t _status) {
     return CMD_FAIL;
   }
 
-  struct sockaddr_in server_addr;
-  server_addr.sin_family = AF_INET;
-  server_addr.sin_port = htons(tcp_port);
-  if (inet_pton(AF_INET, TCP_IP, & server_addr.sin_addr) <= 0) {
-    perror("Invalid address");
-    close(sock);
-    return CMD_FAIL;
-  }
+  // struct sockaddr_in server_addr;
+  // server_addr.sin_family = AF_INET;
+  // server_addr.sin_port = htons(tcp_port);
+  // if (inet_pton(AF_INET, TCP_IP, & server_addr.sin_addr) <= 0) {
+  //   perror("Invalid address");
+  //   close(sock);
+  //   return CMD_FAIL;
+  // }
 
-  if (connect(sock, (struct sockaddr * ) & server_addr, sizeof(server_addr)) < 0) {
-    perror("Connection failed");
-    close(sock);
-    return CMD_FAIL;
-  }
+  // if (connect(sock, (struct sockaddr * ) & server_addr, sizeof(server_addr)) < 0) {
+  //   perror("Connection failed");
+  //   close(sock);
+  //   return CMD_FAIL;
+  // }
 
   if (send(sock, message, sizeof(message), 0) < 0) {
     perror("Send error");
@@ -456,10 +456,10 @@ int readStatus(uint8_t _port, iol_status * status_data) {
     return CMD_FAIL;
   }
 
-  uint16_t tcp_port = (_port < 2) ? TCP_PORT1 : TCP_PORT2;
-  if (_port >= 2) {
-    _port -= 2;
-  }
+  // uint16_t tcp_port = (_port < 2) ? TCP_PORT1 : TCP_PORT2;
+  // if (_port >= 2) {
+  //   _port -= 2;
+  // }
 
   // Command STATUS = 6
   uint8_t message[2];
@@ -480,14 +480,14 @@ int readStatus(uint8_t _port, iol_status * status_data) {
     return CMD_FAIL;
   }
 
-  struct sockaddr_in server_addr;
-  server_addr.sin_family = AF_INET;
-  server_addr.sin_port = htons(tcp_port);
-  if (inet_pton(AF_INET, TCP_IP, & server_addr.sin_addr) <= 0) {
-    perror("Invalid address");
-    close(sock);
-    return CMD_FAIL;
-  }
+  // struct sockaddr_in server_addr;
+  // server_addr.sin_family = AF_INET;
+  // server_addr.sin_port = htons(tcp_port);
+  // if (inet_pton(AF_INET, TCP_IP, & server_addr.sin_addr) <= 0) {
+  //   perror("Invalid address");
+  //   close(sock);
+  //   return CMD_FAIL;
+  // }
 
   if (connect(sock, (struct sockaddr * ) & server_addr, sizeof(server_addr)) < 0) {
     perror("Connection failed");
